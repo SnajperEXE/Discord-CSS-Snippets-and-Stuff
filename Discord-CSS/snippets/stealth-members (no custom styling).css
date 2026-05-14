@@ -1,0 +1,44 @@
+[class*="membersWrap_"] {
+
+    min-width:
+        18px !important;
+
+    width:
+        18px !important;
+
+    overflow:
+        hidden !important;
+
+    transition:
+        width 0.35s cubic-bezier(0.4,0,0.2,1) !important;
+
+    box-sizing:
+        border-box !important;
+}
+
+[class*="membersWrap_"]:hover {
+
+    width:
+        240px !important;
+}
+
+[class*="membersWrap_"] [class*="members_"] {
+
+    opacity:
+        0;
+
+    transition:
+        opacity 0.2s ease;
+}
+
+[class*="membersWrap_"]:hover [class*="members_"] {
+
+    opacity:
+        1;
+}
+
+[class*="membersGroup_"] {
+
+    padding-left:
+        15px !important;
+}
