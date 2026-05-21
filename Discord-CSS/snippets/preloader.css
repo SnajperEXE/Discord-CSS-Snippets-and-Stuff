@@ -1,0 +1,406 @@
+ /* FULLSCREEN PRELOADER STYLE */
+.appMount__51fd7::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(circle at center,
+        #02111f 0%,
+        #010814 70%,
+        #00060f 100%);
+
+    z-index: 999999;
+
+    pointer-events: none;
+}
+  
+/* ========================= */
+/*      LoL Preloader         */
+/* ========================= */
+
+/* MAIN BACKGROUND */
+
+.appMount__51fd7::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #02111f 0%,
+            #010814 60%,
+            #00060f 100%
+        );
+
+    z-index: 9999;
+
+    pointer-events: none;
+
+    will-change: opacity;
+    backface-visibility: hidden;
+
+    animation:
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* MAIN ROTATING RING */
+
+.appMount__51fd7::after {
+    content: "";
+
+    position: fixed;
+
+    width: 700px;
+    height: 700px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(200,170,110,0.16);
+
+    background:
+        repeating-conic-gradient(
+            rgba(200,170,110,0.16) 0deg 1deg,
+            transparent 1deg 2deg
+        );
+
+    mask:
+        radial-gradient(
+            circle,
+            transparent 62%,
+            white 63%,
+            white 67%,
+            transparent 68%
+        );
+
+    z-index: 10000;
+
+    pointer-events: none;
+
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+
+    animation:
+        lolRotate 80s linear infinite,
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* OUTER DECORATION RING */
+
+.bg__960e4::before {
+    content: "";
+
+    position: fixed;
+
+    width: 760px;
+    height: 760px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(200,170,110,0.08);
+
+    z-index: 9999;
+
+    pointer-events: none;
+
+    will-change: opacity;
+    backface-visibility: hidden;
+
+    animation:
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* LEAGUE LOGO */
+
+.bg__960e4::after {
+    content: "";
+
+    position: fixed;
+
+    width: 220px;
+    height: 220px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -60%);
+
+    background-image: url("https://cdn.discordapp.com/attachments/1504432183706910751/1507035911014318191/lol_logo.png?ex=6a107010&is=6a0f1e90&hm=90cbe3daee6744500d7d28759ae1240b6d670f5807d218f9e1a53c3eb02ac565&");
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    filter:
+        drop-shadow(0 0 12px rgba(200,170,110,0.45))
+        drop-shadow(0 0 35px rgba(0,180,255,0.3));
+
+    z-index: 10001;
+
+    pointer-events: none;
+
+    will-change: opacity;
+    backface-visibility: hidden;
+
+    animation:
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* LOADING TITLE */
+
+.layers__160d8::before {
+    content: "LOADING";
+
+    position: fixed;
+
+    left: 50%;
+    top: calc(50% + 120px);
+
+    transform: translateX(-50%);
+
+    color: #c8aa6e;
+
+    font-size: 34px;
+    letter-spacing: 4px;
+
+    font-family: serif;
+
+    z-index: 10001;
+
+    pointer-events: none;
+
+    will-change: opacity;
+    backface-visibility: hidden;
+
+    animation:
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* LOADING BAR */
+
+.layers__160d8::after {
+    content: "";
+
+    position: fixed;
+
+    width: 250px;
+    height: 12px;
+
+    left: 50%;
+    top: calc(50% + 180px);
+
+    transform: translateX(-50%);
+
+    border: 1px solid #c8aa6e;
+    border-radius: 30px;
+
+    box-shadow:
+        0 0 10px rgba(200,170,110,0.12);
+
+    padding: 2px;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            #00c8ff,
+            #0a84ff
+        );
+
+    background-repeat: no-repeat;
+
+    background-clip: content-box;
+
+    background-size: 0% 100%;
+    background-position: left center;
+
+    z-index: 10001;
+
+    pointer-events: none;
+
+    will-change: background-size, opacity;
+    backface-visibility: hidden;
+
+    animation:
+        lolLoading 2.6s cubic-bezier(0.25, 1, 0.5, 1) forwards,
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* SUBTEXT */
+
+.container_b385c9::after {
+    content: "Loading Your Wallet ID...";
+
+    position: fixed;
+
+    left: 50%;
+    top: calc(50% + 210px);
+
+    transform: translateX(-50%);
+
+    color: rgba(200,170,110,0.6);
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+
+    font-family:
+        monospace,
+        sans-serif;
+
+    white-space: nowrap;
+
+    z-index: 10005;
+
+    pointer-events: none;
+
+    will-change: opacity;
+    backface-visibility: hidden;
+
+    animation:
+        lolTextSwitcher 2.6s steps(1) forwards,
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* SIDE LINES */
+
+.visual-refresh::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            75deg,
+            rgba(200,170,110,0.035) 0px,
+            rgba(200,170,110,0.035) 2px,
+            transparent 2px,
+            transparent 14px
+        );
+
+    mask:
+        linear-gradient(
+            to right,
+            white 0%,
+            transparent 25%,
+            transparent 75%,
+            white 100%
+        );
+
+    z-index: 9998;
+
+    opacity: 0.5;
+
+    pointer-events: none;
+
+    animation:
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* CORNER DOTS */
+
+.visual-refresh::after {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(circle at 15% 25%, #c8aa6e 0 2px, transparent 3px),
+        radial-gradient(circle at 85% 25%, #c8aa6e 0 2px, transparent 3px),
+        radial-gradient(circle at 15% 75%, #c8aa6e 0 2px, transparent 3px),
+        radial-gradient(circle at 85% 75%, #c8aa6e 0 2px, transparent 3px);
+
+    opacity: 0.5;
+
+    z-index: 9998;
+
+    pointer-events: none;
+
+    animation:
+        lolPreloaderFadeOut 3.5s ease forwards;
+}
+
+/* ANIMATIONS */
+
+@keyframes lolRotate {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
+    }
+
+    100% {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg);
+    }
+}
+
+/* LOADING BAR */
+
+@keyframes lolLoading {
+
+    0% {
+        background-size: 0% 100%;
+    }
+
+    100% {
+        background-size: 100% 100%;
+    }
+}
+
+/* TEXT SWITCHER */
+
+@keyframes lolTextSwitcher {
+
+    0% {
+        content: "Loading Your Wallet ID...";
+    }
+
+    35% {
+        content: "Checking Nitro Balance ($0.00)...";
+    }
+
+    70% {
+        content: "Optimizing Wumpus Economy...";
+    }
+
+    100% {
+        content: "Optimizing Wumpus Economy...";
+    }
+}
+
+/* GLOBAL FADEOUT */
+
+@keyframes lolPreloaderFadeOut {
+
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    80% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
