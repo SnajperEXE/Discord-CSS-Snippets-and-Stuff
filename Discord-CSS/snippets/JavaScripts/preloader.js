@@ -1,205 +1,209 @@
-import definePlugin from "@utils/types";
+(function () {
 
-export default definePlugin({
-    id: "LoLPreloader",
-    name: "LoLPreloader",
-    description: "League-inspired loading screen with realistic animated progress",
-    authors: [{ name: "SnajperEXE" } as any],
+    // ============================================
+    // PREVENT DOUBLE INJECTION
+    // ============================================
 
-    interval: null as number | null,
-    injected: false,
+    if (window.lolPreloaderLoaded) return;
 
-    injectLoader() {
-        if (this.injected) return;
-        this.injected = true;
+    window.lolPreloaderLoaded = true;
 
-        const container = document.createElement("div");
-        container.className = "lol-loading-screen-container";
+    // ============================================
+    // CREATE MAIN CONTAINER
+    // ============================================
 
-        const logo = document.createElement("div");
-        logo.className = "lol-loading-screen-logo";
+    const container = document.createElement("div");
+    container.className = "lol-loading-screen-container";
 
-        const title = document.createElement("div");
-        title.className = "lol-loading-screen-title";
-        title.innerText = "LOADING";
+    const logo = document.createElement("div");
+    logo.className = "lol-loading-screen-logo";
 
-        const progressFill = document.createElement("div");
-        progressFill.className = "lol-loading-screen-progress-bar-progress";
+    const title = document.createElement("div");
+    title.className = "lol-loading-screen-title";
+    title.innerText = "LOADING";
 
-        const subtext = document.createElement("div");
-        subtext.className = "lol-loading-screen-subtext";
+    const progressFill = document.createElement("div");
+    progressFill.className =
+        "lol-loading-screen-progress-bar-progress";
 
-        container.appendChild(logo);
-        container.appendChild(title);
-        container.appendChild(progressFill);
-        container.appendChild(subtext);
+    const subtext = document.createElement("div");
+    subtext.className = "lol-loading-screen-subtext";
 
-        (document.documentElement || document.body).appendChild(container);
+    container.appendChild(logo);
+    container.appendChild(title);
+    container.appendChild(progressFill);
+    container.appendChild(subtext);
 
-        const packages = [
-            "Collecting your RP...",
-            "Buffing Yasuo...",
-            "Feeding Poros...",
-            "Preparing mental damage...",
-            "Rendering Blue Essence...",
-            "Loading Windwall..."
-        ];
+    (document.documentElement || document.body)
+        .appendChild(container);
 
-        let currentProgress = 0;
-        let packageIndex = 0;
-        let isCompleting = false;
+    // ============================================
+    // SUBTEXTS
+    // ============================================
 
-        subtext.innerText = packages[packageIndex];
+    const packages = [
+        "Collecting your RP...",
+        "Buffing Yasuo...",
+        "Feeding Poros...",
+        "Preparing mental damage...",
+        "Rendering Blue Essence...",
+        "Loading Windwall..."
+    ];
 
-        this.interval = window.setInterval(() => {
+    let currentProgress = 0;
+    let packageIndex = 0;
+    let isCompleting = false;
 
-            let increment = 0;
+    subtext.innerText = packages[packageIndex];
 
-            // ============================================
-            // EARLY PHASE
-            // ============================================
+    // ============================================
+    // MAIN LOOP
+    // ============================================
 
-            if (currentProgress < 70) {
+    const interval = window.setInterval(() => {
 
-                increment =
-                    (80 - currentProgress) * 0.06 +
-                    (Math.random() * 0.8);
+        let increment = 0;
 
-            }
+        // ============================================
+        // EARLY PHASE
+        // ============================================
 
-            // ============================================
-            // MID PHASE
-            // ============================================
+        if (currentProgress < 70) {
 
-            else if (currentProgress < 92) {
+            increment =
+                (80 - currentProgress) * 0.06 +
+                (Math.random() * 0.8);
 
-                increment =
-                    (98 - currentProgress) * 0.02 +
-                    (Math.random() * 0.18);
+        }
 
-            }
+        // ============================================
+        // MID PHASE
+        // ============================================
 
-            // ============================================
-            // FINAL PHASE (SMOOTHED)
-            // ============================================
+        else if (currentProgress < 92) {
 
-            else {
+            increment =
+                (98 - currentProgress) * 0.02 +
+                (Math.random() * 0.18);
 
-                const remaining =
-                    100 - currentProgress;
+        }
 
-                increment =
-                    remaining * 0.015 + 0.05;
+        // ============================================
+        // FINAL PHASE
+        // ============================================
 
-            }
+        else {
 
-            // ============================================
-            // RANDOM MICRO STALLS
-            // ============================================
+            const remaining =
+                100 - currentProgress;
 
-            if (Math.random() < 0.02) {
+            increment =
+                remaining * 0.015 + 0.05;
 
-                increment *= 0.5;
+        }
 
-            }
+        // ============================================
+        // RANDOM MICRO STALLS
+        // ============================================
 
-            // ============================================
-            // RANDOM MICRO BURSTS
-            // ============================================
+        if (Math.random() < 0.02) {
 
-            if (Math.random() < 0.015) {
+            increment *= 0.5;
 
-                increment += 0.8;
+        }
 
-            }
+        // ============================================
+        // RANDOM MICRO BURSTS
+        // ============================================
 
-            currentProgress += increment;
+        if (Math.random() < 0.015) {
 
-            // ============================================
-            // REALISTIC 97% HOLD
-            // ============================================
+            increment += 0.8;
 
-            if (currentProgress >= 97 && !isCompleting) {
+        }
 
-                currentProgress = 97;
+        currentProgress += increment;
 
-                setTimeout(() => {
+        // ============================================
+        // 97% HOLD
+        // ============================================
 
-                    isCompleting = true;
+        if (currentProgress >= 97 && !isCompleting) {
 
-                }, 700 + Math.random() * 900);
+            currentProgress = 97;
 
-            }
+            setTimeout(() => {
 
-            // ============================================
-            // COMPLETION PUSH
-            // ============================================
+                isCompleting = true;
 
-            if (isCompleting && currentProgress < 100) {
+            }, 700 + Math.random() * 900);
 
-                currentProgress += 1.2;
+        }
 
-            }
+        // ============================================
+        // FINAL PUSH
+        // ============================================
 
-            // ============================================
-            // CLAMP
-            // ============================================
+        if (isCompleting && currentProgress < 100) {
 
-            if (currentProgress > 100) {
+            currentProgress += 1.2;
 
-                currentProgress = 100;
+        }
 
-            }
+        // ============================================
+        // CLAMP
+        // ============================================
 
-            // ============================================
-            // APPLY VISUAL FILL
-            // ============================================
+        if (currentProgress > 100) {
 
-            progressFill.style.transform =
-                `scaleX(${currentProgress / 100})`;
+            currentProgress = 100;
 
-            // ============================================
-            // ROTATE SUBTEXTS
-            // ============================================
+        }
 
-            if (
-                Math.floor(currentProgress) % 18 === 0 &&
-                Math.floor(currentProgress) !== 0
-            ) {
+        // ============================================
+        // APPLY VISUAL FILL
+        // ============================================
 
-                packageIndex =
-                    (packageIndex + 1) % packages.length;
+        progressFill.style.transform =
+            `scaleX(${currentProgress / 100})`;
 
-                subtext.innerText =
-                    packages[packageIndex];
+        // ============================================
+        // ROTATE SUBTEXTS
+        // ============================================
 
-            }
+        if (
+            Math.floor(currentProgress) % 18 === 0 &&
+            Math.floor(currentProgress) !== 0
+        ) {
 
-            // ============================================
-            // FINISH ANIMATION
-            // ============================================
+            packageIndex =
+                (packageIndex + 1) % packages.length;
 
-            if (currentProgress >= 100) {
+            subtext.innerText =
+                packages[packageIndex];
 
-                clearInterval(this.interval!);
+        }
 
-                container.style.opacity = "0";
+        // ============================================
+        // FINISH
+        // ============================================
 
-                setTimeout(() => {
+        if (currentProgress >= 100) {
 
-                    container.remove();
-                    this.injected = false;
+            clearInterval(interval);
 
-                }, 850);
+            container.style.opacity = "0";
 
-            }
+            setTimeout(() => {
 
-        }, 50);
-    },
+                container.remove();
 
-    start() {
-        this.injectLoader();
-    },
+                window.lolPreloaderLoaded = false;
 
-    stop() {}
-});
+            }, 850);
+
+        }
+
+    }, 50);
+
+})();
