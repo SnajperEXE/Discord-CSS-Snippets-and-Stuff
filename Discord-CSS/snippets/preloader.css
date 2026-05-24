@@ -1,178 +1,227 @@
+console.log("REMOTE JS LOADED");
 
-/* HEXTECH LOADING SCREEN */
+setTimeout(() => {
 
-.lol-loading-screen-container {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 999999 !important;
+    // ============================================
+    // PREVENT DOUBLE INJECTION
+    // ============================================
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    if (window.lolPreloaderLoaded) return;
 
-    background: url("https://media.discordapp.net/attachments/1504432183706910751/1507737995250241717/loading-bg.png?ex=6a144f6e&is=6a12fdee&hm=92ff557d5062f5b52bed7e3bf5bc9507eea7bbbe6be0c5b91f00f21847be2b86&=&format=webp&quality=lossless&width=1526&height=859")
-        #010a13 no-repeat !important;
+    window.lolPreloaderLoaded = true;
 
-    background-size: cover !important;
-    background-position: center !important;
+    // ============================================
+    // CREATE MAIN CONTAINER
+    // ============================================
 
-    pointer-events: auto !important;
+    const container = document.createElement("div");
+    container.className = "lol-loading-screen-container";
 
-    transition: opacity 0.8s ease-in-out !important;
-}
+    const logo = document.createElement("div");
+    logo.className = "lol-loading-screen-logo";
 
-/* INNER ROTATING CORE */
+    const title = document.createElement("div");
+    title.className = "lol-loading-screen-title";
+    title.innerText = "LOADING";
 
-.lol-loading-screen-container::before {
-    content: "" !important;
+    const progressFill = document.createElement("div");
+    progressFill.className =
+        "lol-loading-screen-progress-bar-progress";
 
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
+    const subtext = document.createElement("div");
+    subtext.className = "lol-loading-screen-subtext";
 
-    width: 600px !important;
-    height: 600px !important;
+    container.appendChild(logo);
+    container.appendChild(title);
+    container.appendChild(progressFill);
+    container.appendChild(subtext);
 
-    background-image: url("https://media.discordapp.net/attachments/1504432183706910751/1507737559751590028/inner-spinner.png?ex=6a144f06&is=6a12fd86&hm=2a558d6b5eb533e4a14a3750683eee9c3f54ca03bf941ce53234386d8bf7e0bb&=&format=webp&quality=lossless&width=630&height=630") !important;
+    // ============================================
+    // SAFE APPEND
+    // ============================================
 
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: contain !important;
+    const target =
+        document.body ||
+        document.documentElement;
 
-    animation: loading-spinner 60s linear infinite !important;
+    if (!target) {
 
-    transform-origin: center center !important;
+        console.error(
+            "LoL Preloader: No DOM target found."
+        );
 
-    z-index: 1000000 !important;
-}
-
-/* PROGRESS BAR FRAME */
-
-.lol-loading-screen-container::after {
-    content: "" !important;
-
-    position: absolute !important;
-
-    top: calc(50% + 99px) !important;
-    left: 50% !important;
-
-    transform: translateX(-50%) !important;
-
-    width: 245px !important;
-    height: 10px !important;
-
-    border: 1px solid #c8aa6e !important;
-    border-radius: 6px !important;
-
-    background: transparent !important;
-
-    box-sizing: border-box !important;
-
-    z-index: 1000001 !important;
-}
-
-/* LOGO */
-
-.lol-loading-screen-logo {
-    content: "" !important;
-    display: block !important;
-
-    position: absolute !important;
-
-    top: 52% !important;
-    left: 50% !important;
-
-    transform: translate(-50%, -78%) !important;
-
-    width:  250px !important;
-    height: 250px !important;
-
-    background-image: url("https://cdn.discordapp.com/attachments/1504432183706910751/1507035911014318191/lol_logo.png?ex=6a146490&is=6a131310&hm=0a64aa7030ee9125f6e957d733ebd58f745deeba6a6ba44e370d6070e0839cd0&") !important;
-
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-
-    filter:
-        drop-shadow(0 0 18px rgba(200, 170, 110, 0.35))
-        drop-shadow(0 0 4px rgba(0, 180, 255, 0.18)) !important;
-
-    z-index: 1000005 !important;
-}
-
-/* LOADING TEXT */
-
-.lol-loading-screen-title {
-    position: absolute !important;
-
-    top: calc(50% + 60px) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    font-weight: 700;
-    color: #c8aa6e !important;
-    font-family: "BeaufortforLOL", serif !important;
-    font-size: 26px !important;
-    letter-spacing: .05em !important;
-    z-index: 1000002 !important;
-}
-
-/* SUBTEXT */
-
-.lol-loading-screen-subtext {
-    position: absolute !important;
-
-    top: calc(50% + 115px) !important;
-    left: 50% !important;
-    -webkit-font-smoothing: subpixel-antialiased;
-    transform: translateX(-50%) !important;
-    color: #a09b8c !important;
-    font-family: "Spiegel", monospace, sans-serif !important;
-    font-size: 11px !important;
-    white-space: nowrap !important;
-    z-index: 1000002 !important;
-}
-
-/* PROGRESS FILL */
-
-.lol-loading-screen-progress-bar-progress {
-    position: absolute !important;
-
-    top: calc(50% + 100px) !important;
-    left: calc(50% - 121px) !important;
-
-    width: 243px !important;
-    height: 8px !important;
-
-    border-radius: 5px !important;
-
-    background-image:
-        linear-gradient(
-            90deg,
-            #005a82 0%,
-            #0a96aa 65%,
-            #cdfafa 120%
-        ) !important;
-
-    transform-origin: left center !important;
-    transform: scaleX(0);
-
-    will-change: transform !important;
-
-    box-shadow:
-        0 0 10px rgba(10, 150, 170, 0.25),
-        0 0 4px rgba(205, 250, 250, 0.2) !important;
-
-    z-index: 1000003 !important;
-}
-
-/* ANIMATION */
-
-@keyframes loading-spinner {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
+        return;
     }
 
-    100% {
-        transform: translate(-50%, -50%) rotate(1turn);
-    }
-}
+    target.appendChild(container);
+
+    // ============================================
+    // SUBTEXTS
+    // ============================================
+
+    const packages = [
+        "Collecting your RP...",
+        "Buffing Yasuo...",
+        "Feeding Poros...",
+        "Preparing mental damage...",
+        "Rendering Blue Essence...",
+        "Loading Windwall..."
+    ];
+
+    let currentProgress = 0;
+    let packageIndex = 0;
+    let isCompleting = false;
+
+    subtext.innerText = packages[packageIndex];
+
+    // ============================================
+    // MAIN LOOP
+    // ============================================
+
+    const interval = window.setInterval(() => {
+
+        let increment = 0;
+
+        // ============================================
+        // EARLY PHASE
+        // ============================================
+
+        if (currentProgress < 70) {
+
+            increment =
+                (80 - currentProgress) * 0.06 +
+                (Math.random() * 0.8);
+
+        }
+
+        // ============================================
+        // MID PHASE
+        // ============================================
+
+        else if (currentProgress < 92) {
+
+            increment =
+                (98 - currentProgress) * 0.02 +
+                (Math.random() * 0.18);
+
+        }
+
+        // ============================================
+        // FINAL PHASE
+        // ============================================
+
+        else {
+
+            const remaining =
+                100 - currentProgress;
+
+            increment =
+                remaining * 0.015 + 0.05;
+
+        }
+
+        // ============================================
+        // RANDOM MICRO STALLS
+        // ============================================
+
+        if (Math.random() < 0.02) {
+
+            increment *= 0.5;
+
+        }
+
+        // ============================================
+        // RANDOM MICRO BURSTS
+        // ============================================
+
+        if (Math.random() < 0.015) {
+
+            increment += 0.8;
+
+        }
+
+        currentProgress += increment;
+
+        // ============================================
+        // 97% HOLD
+        // ============================================
+
+        if (currentProgress >= 97 && !isCompleting) {
+
+            currentProgress = 97;
+
+            setTimeout(() => {
+
+                isCompleting = true;
+
+            }, 700 + Math.random() * 900);
+
+        }
+
+        // ============================================
+        // FINAL PUSH
+        // ============================================
+
+        if (isCompleting && currentProgress < 100) {
+
+            currentProgress += 1.2;
+
+        }
+
+        // ============================================
+        // CLAMP
+        // ============================================
+
+        if (currentProgress > 100) {
+
+            currentProgress = 100;
+
+        }
+
+        // ============================================
+        // APPLY VISUAL FILL
+        // ============================================
+
+        progressFill.style.transform =
+            `scaleX(${currentProgress / 100})`;
+
+        // ============================================
+        // ROTATE SUBTEXTS
+        // ============================================
+
+        if (
+            Math.floor(currentProgress) % 18 === 0 &&
+            Math.floor(currentProgress) !== 0
+        ) {
+
+            packageIndex =
+                (packageIndex + 1) % packages.length;
+
+            subtext.innerText =
+                packages[packageIndex];
+
+        }
+
+        // ============================================
+        // FINISH
+        // ============================================
+
+        if (currentProgress >= 100) {
+
+            clearInterval(interval);
+
+            container.style.opacity = "0";
+
+            setTimeout(() => {
+
+                container.remove();
+
+                window.lolPreloaderLoaded = false;
+
+            }, 850);
+
+        }
+
+    }, 50);
+
+}, 50);
