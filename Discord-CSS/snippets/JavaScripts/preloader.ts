@@ -62,8 +62,8 @@ export default definePlugin({
             if (currentProgress < 70) {
 
                 increment =
-                    (80 - currentProgress) * 0.07 +
-                    (Math.random() * 0.9);
+                    (80 - currentProgress) * 0.06 +
+                    (Math.random() * 0.8);
 
             }
 
@@ -74,19 +74,22 @@ export default definePlugin({
             else if (currentProgress < 92) {
 
                 increment =
-                    (98 - currentProgress) * 0.025 +
-                    (Math.random() * 0.25);
+                    (98 - currentProgress) * 0.02 +
+                    (Math.random() * 0.18);
 
             }
 
             // ============================================
-            // FINAL PHASE
+            // FINAL PHASE (SMOOTHED)
             // ============================================
 
             else {
 
+                const remaining =
+                    100 - currentProgress;
+
                 increment =
-                    0.03 + (Math.random() * 0.04);
+                    remaining * 0.015 + 0.05;
 
             }
 
@@ -94,16 +97,20 @@ export default definePlugin({
             // RANDOM MICRO STALLS
             // ============================================
 
-            if (Math.random() < 0.04) {
-                increment *= 0.15;
+            if (Math.random() < 0.02) {
+
+                increment *= 0.5;
+
             }
 
             // ============================================
             // RANDOM MICRO BURSTS
             // ============================================
 
-            if (Math.random() < 0.02) {
-                increment += 1.2;
+            if (Math.random() < 0.015) {
+
+                increment += 0.8;
+
             }
 
             currentProgress += increment;
@@ -116,24 +123,32 @@ export default definePlugin({
 
                 currentProgress = 97;
 
-                // Fake "finalizing"
                 setTimeout(() => {
+
                     isCompleting = true;
-                }, 700 + Math.random() * 1200);
+
+                }, 700 + Math.random() * 900);
+
             }
 
             // ============================================
-            // COMPLETE
+            // COMPLETION PUSH
             // ============================================
 
             if (isCompleting && currentProgress < 100) {
 
-                currentProgress += 0.6;
+                currentProgress += 1.2;
 
             }
 
+            // ============================================
+            // CLAMP
+            // ============================================
+
             if (currentProgress > 100) {
+
                 currentProgress = 100;
+
             }
 
             // ============================================
@@ -147,12 +162,17 @@ export default definePlugin({
             // ROTATE SUBTEXTS
             // ============================================
 
-            if (Math.floor(currentProgress) % 18 === 0) {
+            if (
+                Math.floor(currentProgress) % 18 === 0 &&
+                Math.floor(currentProgress) !== 0
+            ) {
 
                 packageIndex =
                     (packageIndex + 1) % packages.length;
 
-                subtext.innerText = packages[packageIndex];
+                subtext.innerText =
+                    packages[packageIndex];
+
             }
 
             // ============================================
@@ -171,6 +191,7 @@ export default definePlugin({
                     this.injected = false;
 
                 }, 850);
+
             }
 
         }, 50);
